@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
 
 	
 	if (argc != 2) { // exception, if invalid arguments passed
-		fputs("Usage: SIUC_text_editor filename.sim", stderr);
+		fputs("Usage: SIUC_text_editor filename.txt", stderr);
 		return -1;
 	}
 
