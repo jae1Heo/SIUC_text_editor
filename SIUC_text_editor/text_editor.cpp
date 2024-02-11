@@ -7,11 +7,11 @@ char init() {
 	fputs("|            SIUC            |\n", stdout);
 	fputs("|           ver 0.1          |\n", stdout);
 	fputs("|    i to start, q to exit   |\n", stdout);
-	fputs("|                            |\n", stdout);
+	fputs("|       p to interprete      |\n", stdout);
 	fputs("------------------------------\n", stdout);
 	while (1) {
 		c = getchar();
-		if (c == 'i' || c == 'q') {
+		if (c == 'i' || c == 'q' || c == 'p') {
 			break;
 		}
 	}

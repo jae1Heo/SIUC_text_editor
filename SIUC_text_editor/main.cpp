@@ -1,10 +1,18 @@
 #include "text_editor.h"
 #include "text_encryptor.h"
+#include <Windows.h>
 
 char buffer[BUF_LEN];
 FILE* in;
 
 int main(int argc, char* argv[]) {
+
+	STARTUPINFOA si;
+	PROCESS_INFORMATION pi;
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
 
 	
 	if (argc != 2) { // exception, if invalid arguments passed
@@ -19,7 +27,8 @@ int main(int argc, char* argv[]) {
 	if (state == 'i') {
 		system("cls");
 
-		fopen_s(&in, "test.txt", "wb");
+		fopen_s(&in, argv[1], "wb");
+		//fopen_s(&in, "test.txt", "wb");
 
 		if (in == NULL) {
 			return -1;
@@ -45,6 +54,18 @@ int main(int argc, char* argv[]) {
 			}
 			memset(buffer, 0, sizeof(char) * BUF_LEN);
 		}
+	}
+	else if (state == 'p') {
+		char cmdLine[BUF_LEN];
+		strcpy_s(cmdLine, BUF_LEN, "SIUC.exe ");
+		strcat_s(cmdLine, BUF_LEN, argv[1]);
+		cmdLine[strlen(cmdLine) + 1] = '\0';
+		
+		CreateProcessA(NULL, cmdLine, NULL, NULL, false, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi);
+		WaitForSingleObject(pi.hProcess, INFINITE);
+
+		CloseHandle(pi.hProcess);
+		CloseHandle(pi.hThread);
 	}
 	else {
 		return 0;
